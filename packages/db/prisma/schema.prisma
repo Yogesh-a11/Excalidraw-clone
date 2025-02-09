@@ -13,6 +13,7 @@ model User {
   email       String        @unique
   password    String        
   name        String
+  role        Role
   spaces      Space[]
   shapes      Shape[]
 }
@@ -33,4 +34,9 @@ model Shape {
   userId       String 
   room         Space           @relation(fields: [roomId], references: [id])
   user          User            @relation(fields: [userId], references: [id])
+}
+
+enum Role {
+  Creator
+  User
 }
