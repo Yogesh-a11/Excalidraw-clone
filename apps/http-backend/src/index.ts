@@ -9,5 +9,5 @@ app.use('/api/v1', router)
 
 
 app.listen(PORT, () => {
-    console.log(`Example app listening on port ${PORT}`)
-})
+    console.log(`app listening on port ${PORT}`)
+}) 

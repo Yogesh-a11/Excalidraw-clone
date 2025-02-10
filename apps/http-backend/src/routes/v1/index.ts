@@ -4,6 +4,7 @@ import bcrypt from 'bcryptjs'
 import { prismaClient } from "@repo/db/client"
 import jwt from "jsonwebtoken"
 import "dotenv/config"
+import { spaceRouter } from "./space.ts";
 export const router:Router = Router()
 
 router.post('/signup', async (req, res) => {
@@ -20,7 +21,6 @@ router.post('/signup', async (req, res) => {
                 email: parsedData.data.email,
                 password: hashedPassword,
                 name: parsedData.data.name,
-                role: parsedData.data.role === "creator" ? "Creator" : "User"
             }
         })
         res.json({
@@ -55,7 +55,6 @@ router.post("/signin", async (req, res) => {
         }
         const token = jwt.sign({
             userId: user.id,
-            role: user.role
         }, process.env.JWT_SECRET as string) 
 
         res.json({
@@ -66,3 +65,5 @@ router.post("/signin", async (req, res) => {
         res.status(500).json({message: "something went wrong"})
     }
 })
+
+router.use("/spaces", spaceRouter)
