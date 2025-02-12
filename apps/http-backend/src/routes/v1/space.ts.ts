@@ -55,7 +55,7 @@ spaceRouter.get("/space/:spaceId", async (req, res) => {
         const spaceId = Number(req.params.spaceId)
         const space = await prismaClient.shape.findMany({
             where: {
-                sapceId: spaceId
+                spceId: spaceId
             },
             orderBy: {
                 id: "desc"

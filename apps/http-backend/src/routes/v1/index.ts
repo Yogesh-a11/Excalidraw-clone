@@ -1,10 +1,11 @@
 import { Router } from "express";
-import { SignupSchema } from "../../types";
+import { LoginSchema, SignupSchema } from "../../types";
 import bcrypt from 'bcryptjs'
 import { prismaClient } from "@repo/db/client"
 import jwt from "jsonwebtoken"
 import "dotenv/config"
 import { spaceRouter } from "./space.ts";
+import { JWT_SECRET } from "../../config";
 export const router:Router = Router()
 
 router.post('/signup', async (req, res) => {
@@ -27,12 +28,13 @@ router.post('/signup', async (req, res) => {
             userId: user.id
         })
     } catch (error) {
+        console.log(error)
         res.status(500).json({message: "something went wrong"})
     }
 })
 
 router.post("/signin", async (req, res) => {
-    const parsedData = SignupSchema.safeParse(req.body)
+    const parsedData = LoginSchema.safeParse(req.body)
     if (!parsedData.success) {
         res.status(400).json(parsedData.error)
         return
@@ -55,15 +57,16 @@ router.post("/signin", async (req, res) => {
         }
         const token = jwt.sign({
             userId: user.id,
-        }, process.env.JWT_SECRET as string) 
+        }, JWT_SECRET as string) 
 
         res.json({
             userId: user.id,
             token
         })
     } catch (error) {
+        console.log(error)
         res.status(500).json({message: "something went wrong"})
     }
 })
 
-router.use("/spaces", spaceRouter)
+router.use("/space", spaceRouter)

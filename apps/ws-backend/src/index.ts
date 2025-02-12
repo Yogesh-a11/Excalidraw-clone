@@ -1,13 +1,6 @@
-import { WebSocketServer } from 'ws';
+import { WebSocketServer } from "ws";
+import { setupWebSocketServer } from "./handlers/websocketHandler";
 
 const wss = new WebSocketServer({ port: 8080 });
-
-wss.on('connection', function connection(ws) {
-    ws.on('error', console.error);
-
-    ws.on('message', function message(data) {
-        console.log('received: %s', data);
-    });
-
-    ws.send('something');
-});
+setupWebSocketServer(wss);
+console.log("WebSocket server running on ws://localhost:8080");

@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express"
 import jwt from "jsonwebtoken"
 import 'dotenv/config'
+import { JWT_SECRET } from "../config"
 export const userMiddleware = (req: Request, res: Response, next: NextFunction) => {
     const header = req.headers["authorization"]
     const token = header?.split(" ")[1]
@@ -11,7 +12,7 @@ export const userMiddleware = (req: Request, res: Response, next: NextFunction) 
     }
 
     try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as {userId: string}
+        const decoded = jwt.verify(token, JWT_SECRET ) as {userId: string}
 
         req.userId = decoded.userId
         next()
