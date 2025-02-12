@@ -28,9 +28,9 @@ model Space {
 
 model Shape {
   id           Int            @id   @default(autoincrement())
-  sapceId       Int
+  spceId       Int
   design       String
   userId       String 
-  room         Space           @relation(fields: [sapceId], references: [id])
+  room         Space           @relation(fields: [spceId], references: [id])
   user          User            @relation(fields: [userId], references: [id])
 }
