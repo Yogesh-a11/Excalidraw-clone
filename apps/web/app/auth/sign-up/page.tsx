@@ -24,14 +24,14 @@ export default function SignUp() {
             });
     
             localStorage.setItem("token", response.data.token);
-            setMessage("Signin successful!");
+            setMessage("Signup successful!");
     
             router.push("/home");
         } catch (error: any) {
-            console.error("Signin error:", error);
+            console.error("Signup error:", error);
             setMessage(
             error.response?.data?.message ||
-                "Signin failed. Please check your credentials and try again."
+                "Signup failed. Please check your credentials and try again."
             );
         }
     };

@@ -24,7 +24,13 @@ router.post('/signup', async (req, res) => {
                 name: parsedData.data.name,
             }
         })
+
+        const token = jwt.sign({
+            userId: user.id,
+        }, JWT_SECRET as string) 
+
         res.json({
+            token,
             userId: user.id
         })
     } catch (error) {
